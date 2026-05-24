@@ -82,15 +82,21 @@ RAG
 Lost in the Middle
 
 Example Queries
+
 Answer ->
+
 What is the main contribution of these papers?
 
 What are the key limitations discussed across the papers?
+
 Connect Ideas ->
+
 What recurring themes appear across all uploaded papers?
 
 How are retrieval systems connected to long-term memory architectures?
+
 Contradict ->
+
 Which papers disagree about handling long-term memory?
 
 What contradictions exist between retrieval-based memory and long-context approaches?
