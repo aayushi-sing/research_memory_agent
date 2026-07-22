@@ -1,24 +1,24 @@
 """
 embeddings.py
-Provide a ChromaDB-compatible embedding function using sentence-transformers.
+Provide a ChromaDB-compatible embedding function using the same
+all-MiniLM-L6-v2 model, but via ONNX Runtime instead of PyTorch.
+This avoids pulling in torch/transformers (500MB+ of RAM), which
+is critical for running on memory-limited hosts like Render's free tier.
 Model downloads once (~80 MB) and is cached locally.
 """
 
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+from chromadb.utils.embedding_functions import ONNXMiniLM_L6_V2
 from typing import List
-
-# Lightweight but high-quality model — good balance of speed + accuracy
-MODEL_NAME = "all-MiniLM-L6-v2"
 
 # Single shared instance (loaded once per process)
 _ef = None
 
 
-def get_embedding_function() -> SentenceTransformerEmbeddingFunction:
+def get_embedding_function() -> ONNXMiniLM_L6_V2:
     """Return the cached embedding function instance."""
     global _ef
     if _ef is None:
-        _ef = SentenceTransformerEmbeddingFunction(model_name=MODEL_NAME)
+        _ef = ONNXMiniLM_L6_V2()
     return _ef
 
 
