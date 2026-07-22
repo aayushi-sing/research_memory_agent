@@ -4,12 +4,14 @@ Build and render the memory timeline from the document registry.
 Tracks what was ingested, when, and what happened (upload / query / contradiction).
 """
 
+import os
 from datetime import datetime
 from typing import List, Dict
 import json
 from pathlib import Path
 
-EVENTS_FILE = "./timeline_events.json"
+DATA_DIR    = os.getenv("DATA_DIR", ".")
+EVENTS_FILE = f"{DATA_DIR}/timeline_events.json"
 
 
 # ── Event log ────────────────────────────────────────────────────────

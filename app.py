@@ -24,9 +24,14 @@ from utils.reasoning     import extract_concepts_from_chunks, find_shared_concep
 from utils.graph_builder import build_graph, render_graph_html, graph_stats
 from utils.timeline      import build_timeline_from_registry, render_timeline_html, log_event
 
+# ── Data directory ───────────────────────────────────────────────────
+# Defaults to "." for local dev (unchanged behavior).
+# On Render, set DATA_DIR=/app/data (the mounted persistent disk path).
+DATA_DIR = os.getenv("DATA_DIR", ".")
+
 # ── Ensure folders exist ─────────────────────────────────────────────
-Path("uploads").mkdir(exist_ok=True)
-Path("chroma_db").mkdir(exist_ok=True)
+Path(f"{DATA_DIR}/uploads").mkdir(parents=True, exist_ok=True)
+Path(f"{DATA_DIR}/chroma_db").mkdir(parents=True, exist_ok=True)
 Path("graphs").mkdir(exist_ok=True)
 
 # ── Page config ──────────────────────────────────────────────────────
@@ -134,7 +139,7 @@ with st.sidebar:
                     continue
                 with st.spinner(f"Processing {f.name}…"):
                     # Save to disk
-                    save_path = f"uploads/{f.name}"
+                    save_path = f"{DATA_DIR}/uploads/{f.name}"
                     with open(save_path, "wb") as fh:
                         fh.write(f.read())
                     try:
@@ -178,7 +183,7 @@ with st.sidebar:
             with c2:
                 if st.button("✕", key=f"del_{doc['doc_id']}"):
                     delete_document(doc["doc_id"])
-                    fp = Path(f"uploads/{doc['filename']}")
+                    fp = Path(f"{DATA_DIR}/uploads/{doc['filename']}")
                     if fp.exists():
                         fp.unlink()
                     st.rerun()

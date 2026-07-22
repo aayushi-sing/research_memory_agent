@@ -4,6 +4,7 @@ All ChromaDB read/write operations.
 Handles adding documents, querying, and deletion.
 """
 
+import os
 import chromadb
 import json
 from pathlib import Path
@@ -12,8 +13,11 @@ from typing import List, Dict, Optional
 
 from utils.embeddings import get_embedding_function
 
-CHROMA_PATH   = "./chroma_db"
-REGISTRY_FILE = "./registry.json"
+# DATA_DIR defaults to "." for local dev (unchanged behavior).
+# On Render, set DATA_DIR=/app/data (the mounted persistent disk path).
+DATA_DIR      = os.getenv("DATA_DIR", ".")
+CHROMA_PATH   = f"{DATA_DIR}/chroma_db"
+REGISTRY_FILE = f"{DATA_DIR}/registry.json"
 COLLECTION    = "research_memory"
 
 # ── Singletons ──────────────────────────────────────────────────────
