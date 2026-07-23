@@ -29,7 +29,11 @@ _collection = None
 def _get_collection():
     global _client, _collection
     if _collection is None:
-        _client = chromadb.PersistentClient(path=CHROMA_PATH)
+        #_client = chromadb.PersistentClient(path=CHROMA_PATH)
+        _client = chromadb.PersistentClient(
+    path=CHROMA_PATH,
+    settings=chromadb.Settings(anonymized_telemetry=False),
+)
         _collection = _client.get_or_create_collection(
             name=COLLECTION,
             embedding_function=get_embedding_function(),

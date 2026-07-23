@@ -16,7 +16,8 @@ def _get_nlp():
     global _nlp
     if _nlp is None:
         try:
-            _nlp = spacy.load("en_core_web_sm")
+            # _nlp = spacy.load("en_core_web_sm")
+            _nlp = spacy.load("en_core_web_sm", exclude=["lemmatizer", "attribute_ruler"])
         except OSError:
             raise OSError(
                 "spaCy model not found. Run: python -m spacy download en_core_web_sm"

@@ -2,6 +2,7 @@
 
 import streamlit as st
 import os
+import gc
 import uuid
 import shutil
 import time
@@ -150,8 +151,14 @@ with st.sidebar:
                         register_document(doc_id, f.name, len(chunks), text)
                         log_event("upload", f"Uploaded: {f.name}", f"{len(chunks)} chunks")
                         st.success(f"✓ {f.name}  ({len(chunks)} chunks)")
+                    #except Exception as e:
+                        #st.error(f"Error: {e}")
                     except Exception as e:
                         st.error(f"Error: {e}")
+                    finally:
+                        text = None
+                        chunks = None
+                        gc.collect()
             st.rerun()
 
     st.markdown("---")
