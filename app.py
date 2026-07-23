@@ -13,6 +13,9 @@ load_dotenv()
 
 load_dotenv()  # loads GROQ_API_KEY from .env
 
+if "GROQ_API_KEY" in st.secrets:
+    os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+
 # ── Util imports ─────────────────────────────────────────────────────
 from utils.pdf_loader    import extract_text
 from utils.chunker       import chunk_with_metadata
